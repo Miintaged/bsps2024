@@ -1,0 +1,17 @@
+#include <socket_functions.h>
+//USING SAFE ERROR HANDLED FUNCTIONS
+
+int tcp_socket, opt;
+socklen_t tcp_socklen;
+in_port_t port; //TODO assign port
+struct sockaddr_in tcp_address;
+
+tcp_socket = create_socket(); //socket()
+set_reuse_address(tcp_socket); //reuse addr
+
+init_server_sockaddr(&tcp_address, port); //assign struct sockaddr_in
+
+tcp_socklen = sizeof(tcp_address);
+bind_safe(tcp_socket, (struct sockaddr*)&tcp_address, tcp_socklen); //bind()
+
+listen_safe(tcp_socket, SOMAXCONN); //listen()
